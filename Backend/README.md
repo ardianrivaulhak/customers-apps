@@ -155,7 +155,7 @@ This endpoint allows you to make a transaction for a customer.
 
 ### Endpoint
 
-`GET /api/customer/get-promotions`
+`GET /api/customer/promotions`
 
 ### Description
 
@@ -187,7 +187,7 @@ This endpoint allows you to retrieve a list of available promotions.
 
 ### Endpoint
 
-`GET /api/customer/get-news`
+`GET /api/customer/news`
 
 ### Description
 
