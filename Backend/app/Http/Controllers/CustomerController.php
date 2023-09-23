@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\News;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
 
@@ -42,8 +44,26 @@ class CustomerController extends Controller
         $customer->balance -= $amount;
         $customer->save();
 
+        $order = new Order();
+        $order->customer_id = $customer->id;
+        $order->total_price = $amount;
+        $order->save();
+
+        $items = $request->input('items');
+
+        foreach ($items as $item) {
+            $orderItem = new OrderItem();
+            $orderItem->order_id = $order->id;
+            $orderItem->product_name = $item['product_name'];
+            $orderItem->product_price = $item['product_price'];
+            $orderItem->quantity = $item['quantity'];
+            $orderItem->save();
+        }
+
         return response()->json(['message' => 'Transaction successful']);
     }
+
+
 
     public function getPromotions()
     {
