@@ -12,6 +12,35 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
     //
+
+    public  function index(Request $request)
+    {
+        # code...
+        $customers = Customer::with('orders.items')->get();
+
+        return response()->json([
+            'data' => $customers,
+            'message' => 'successfully read data'
+        ]);
+    }
+
+
+    public function getCustomerById($id)
+    {
+        $customer = Customer::with('orders.items')->find($id);
+
+        if (!$customer) {
+            return response()->json([
+                'message' => 'Customer not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $customer,
+            'message' => 'Customer retrieved successfully'
+        ]);
+    }
+
     public function topUpBalance($id, Request $request)
     {
         $customer = Customer::find($id);

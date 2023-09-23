@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/customers', [CustomerController::class, 'index']);
+Route::get('/customers/{id}', [CustomerController::class, 'getCustomerById']);
 Route::post('/customers/{id}/top-up', [CustomerController::class, 'topUpBalance']);
 Route::post('/customers/{id}/transaction', [CustomerController::class, 'makeTransaction']);
 Route::get('/promotions', [CustomerController::class, 'getPromotions']);
