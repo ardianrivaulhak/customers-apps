@@ -1,66 +1,218 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Updating Environment, Running Migrations, and Seeding Database
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This guide outlines the steps required to update your environment configuration, run database migrations, and seed the database.
 
-## About Laravel
+## Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. [Updating Environment Variables](#updating-environment-variables)
+2. [Running Migrations](#running-migrations)
+3. [Seeding the Database](#seeding-the-database)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Updating Environment Variables
 
-## Learning Laravel
+1. Locate the `.env` file in the root directory of your project.
+2. Open the `.env` file using a text editor.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Database Configuration
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Update the following variables to match your database configuration:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```plaintext
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
+```
 
-## Laravel Sponsors
+# Running Migrations
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+To create the necessary tables in your database, you'll use Laravel's migration feature. This command will execute all pending migrations and create the required tables in your database.
 
-### Premium Partners
+```bash
+php artisan migrate
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Seeding the Database
 
-## Contributing
+Seeding the database involves populating it with initial data, which can be helpful for testing or getting started with a populated database.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Follow these steps:
 
-## Code of Conduct
+1. Open a terminal or command prompt.
+2. Navigate to the root directory of your Laravel project.
+3. Run the following command:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan db:seed
+```
 
-## Security Vulnerabilities
+# Customer Controller API Documentation
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+This API provides endpoints for managing customer information, performing transactions, and retrieving promotions and news.
 
-## License
+## Table of Contents
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. [Top Up Balance](#top-up-balance)
+2. [Make Transaction](#make-transaction)
+3. [Get Promotions](#get-promotions)
+4. [Get News](#get-news)
+
+---
+
+## Top Up Balance
+
+### Endpoint
+
+`POST /api/customer/{id}/top-up`
+
+### Description
+
+This endpoint allows you to top up the balance of a customer.
+
+### Parameters
+
+| Parameter | Type   | Description                            |
+| --------- | ------ | -------------------------------------- |
+| `id`      | int    | The ID of the customer to top up.      |
+| `amount`  | double | The amount to be added to the balance. |
+
+### Response
+
+-   `200 OK` on success
+    -   Returns a JSON object with a success message.
+    -   Example response:
+        ```json
+        {
+            "message": "Balance topped up successfully"
+        }
+        ```
+-   `404 Not Found` if the customer is not found.
+    -   Returns a JSON object with an error message.
+    -   Example response:
+        ```json
+        {
+            "message": "Customer not found"
+        }
+        ```
+
+---
+
+## Make Transaction
+
+### Endpoint
+
+`POST /api/customer/{id}/make-transaction`
+
+### Description
+
+This endpoint allows you to make a transaction for a customer.
+
+### Parameters
+
+| Parameter | Type   | Description                                          |
+| --------- | ------ | ---------------------------------------------------- |
+| `id`      | int    | The ID of the customer making the transaction.       |
+| `amount`  | double | The total amount of the transaction.                 |
+| `items`   | array  | An array of items with details for the transaction.  |
+|           |        | - `product_name`: string, the name of the product.   |
+|           |        | - `product_price`: double, the price of the product. |
+|           |        | - `quantity`: int, the quantity of the product.      |
+
+### Response
+
+-   `200 OK` on success
+    -   Returns a JSON object with a success message.
+    -   Example response:
+        ```json
+        {
+            "message": "Transaction successful"
+        }
+        ```
+-   `400 Bad Request` if the customer has insufficient balance.
+    -   Returns a JSON object with an error message.
+    -   Example response:
+        ```json
+        {
+            "message": "Insufficient balance"
+        }
+        ```
+-   `404 Not Found` if the customer is not found.
+    -   Returns a JSON object with an error message.
+    -   Example response:
+        ```json
+        {
+            "message": "Customer not found"
+        }
+        ```
+
+---
+
+## Get Promotions
+
+### Endpoint
+
+`GET /api/customer/get-promotions`
+
+### Description
+
+This endpoint allows you to retrieve a list of available promotions.
+
+### Response
+
+-   `200 OK` on success
+    -   Returns a JSON array of promotion objects.
+    -   Example response:
+        ```json
+        [
+            {
+                "id": 1,
+                "title": "Promotion Title 1",
+                "description": "Promotion Description 1"
+            },
+            {
+                "id": 2,
+                "title": "Promotion Title 2",
+                "description": "Promotion Description 2"
+            }
+        ]
+        ```
+
+---
+
+## Get News
+
+### Endpoint
+
+`GET /api/customer/get-news`
+
+### Description
+
+This endpoint allows you to retrieve a list of news articles.
+
+### Response
+
+-   `200 OK` on success
+    -   Returns a JSON array of news objects.
+    -   Example response:
+        ```json
+        [
+            {
+                "id": 1,
+                "title": "News Title 1",
+                "content": "News Content 1"
+            },
+            {
+                "id": 2,
+                "title": "News Title 2",
+                "content": "News Content 2"
+            }
+        ]
+        ```
+
+Please make sure to replace {id} in the endpoints with the actual customer ID.
+
+Feel free to reach out if you have any further questions or need additional assistance!
