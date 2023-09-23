@@ -60,6 +60,7 @@ This API provides endpoints for managing customer information, performing transa
 2. [Make Transaction](#make-transaction)
 3. [Get Promotions](#get-promotions)
 4. [Get News](#get-news)
+5. [Get Customer](#get-customers)
 
 ---
 
@@ -155,7 +156,7 @@ This endpoint allows you to make a transaction for a customer.
 
 ### Endpoint
 
-`GET /api/customer/promotions`
+`GET /api/promotions`
 
 ### Description
 
@@ -187,7 +188,7 @@ This endpoint allows you to retrieve a list of available promotions.
 
 ### Endpoint
 
-`GET /api/customer/news`
+`GET /api/news`
 
 ### Description
 
@@ -209,6 +210,110 @@ This endpoint allows you to retrieve a list of news articles.
                 "id": 2,
                 "title": "News Title 2",
                 "content": "News Content 2"
+            }
+        ]
+        ```
+
+## Get Customers
+
+### Endpoint
+
+`GET /api/customers`
+
+### Response
+
+-   `200 OK` on success
+    -   Returns a JSON array of news objects.
+    -   Example response:
+        ```json
+        [
+            {
+                "id": 1,
+                "name": "John Doe",
+                "contact": "john.doe@example.com",
+                "balance": 100.0,
+                "created_at": "2023-09-23T12:34:56.000000Z",
+                "updated_at": "2023-09-23T12:34:56.000000Z",
+                "orders": [
+                    {
+                        "id": 1,
+                        "customer_id": 1,
+                        "quantity": 2,
+                        "total_price": 50.0,
+                        "created_at": "2023-09-23T12:34:56.000000Z",
+                        "updated_at": "2023-09-23T12:34:56.000000Z",
+                        "items": [
+                            {
+                                "id": 1,
+                                "order_id": 1,
+                                "quantity": 1,
+                                "product_name": "Product A",
+                                "product_price": 25.0,
+                                "created_at": "2023-09-23T12:34:56.000000Z",
+                                "updated_at": "2023-09-23T12:34:56.000000Z"
+                            },
+                            {
+                                "id": 2,
+                                "order_id": 1,
+                                "quantity": 1,
+                                "product_name": "Product B",
+                                "product_price": 25.0,
+                                "created_at": "2023-09-23T12:34:56.000000Z",
+                                "updated_at": "2023-09-23T12:34:56.000000Z"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+        ```
+
+`GET /api/customers/{id}`
+
+### Response
+
+-   `200 OK` on success
+    -   Returns a JSON array of news objects.
+    -   Example response:
+        ```json
+        [
+            {
+                "id": 1,
+                "name": "John Doe",
+                "contact": "john.doe@example.com",
+                "balance": 100.0,
+                "created_at": "2023-09-23T12:34:56.000000Z",
+                "updated_at": "2023-09-23T12:34:56.000000Z",
+                "orders": [
+                    {
+                        "id": 1,
+                        "customer_id": 1,
+                        "quantity": 2,
+                        "total_price": 50.0,
+                        "created_at": "2023-09-23T12:34:56.000000Z",
+                        "updated_at": "2023-09-23T12:34:56.000000Z",
+                        "items": [
+                            {
+                                "id": 1,
+                                "order_id": 1,
+                                "quantity": 1,
+                                "product_name": "Product A",
+                                "product_price": 25.0,
+                                "created_at": "2023-09-23T12:34:56.000000Z",
+                                "updated_at": "2023-09-23T12:34:56.000000Z"
+                            },
+                            {
+                                "id": 2,
+                                "order_id": 1,
+                                "quantity": 1,
+                                "product_name": "Product B",
+                                "product_price": 25.0,
+                                "created_at": "2023-09-23T12:34:56.000000Z",
+                                "updated_at": "2023-09-23T12:34:56.000000Z"
+                            }
+                        ]
+                    }
+                ]
             }
         ]
         ```
